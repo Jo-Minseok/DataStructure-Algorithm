@@ -44,7 +44,6 @@ public: // 공개형
         }
     }
 
-
     void dequeue() { // 큐를 제거하는 함수
         if (front == rear && flag == 0) { // 만약 큐의 front와 rear가 같고 flag가 0으로써 꽉 차 있는게 아니라면
             cout << "원형 큐가 비어있습니다." << endl; // 문자열 출력
@@ -61,9 +60,9 @@ public: // 공개형
     void Print() { // 큐의 요소들을 출력하는 함수
         int j = 0,i=1; // int형 j,i변수 선언 및 i를 1로 초기화
         while (true) { // 무한 반복문
-            if (flag == 0&&front == rear) {
-                cout << "원형 큐가 비어있습니다." << endl;
-                break;
+            if (flag == 0&&front == rear) { // 원형 큐가 비었을 경우
+                cout << "원형 큐가 비어있습니다." << endl; // 문자열 출력
+                break; // 무한 반복문 탈출
             }
             else {
                 j = (front + i) % MAX; // j를 front+i%MAX 요소로 대입
@@ -79,8 +78,13 @@ public: // 공개형
         }
 
     }
-    char peek() { // 큐의 제일 앞 요소를 출력하는 함수
-        return arr[front+1%MAX]; // 큐의 제일 앞 요소를 출력
+    void peek() { // 큐의 제일 앞 요소를 출력하는 함수
+        if(flag == 0 && rear == front){ // 큐가 비었을 경우
+            cout << "큐가 빈 상태입니다." << endl; // 큐의 제일 앞 요소를 출력
+        }
+        else { // 아닐 경우
+            cout << "최상단   : " << arr[front + 1 % MAX]; // 큐의 제일 앞 요소를 출력
+        }
     }
     int size() { // 큐의 요소 개수를 출력하는 함수
         if (flag == 1) { // 만약 flag가 1일 경우 큐가 가득 찼을 경우
@@ -90,18 +94,18 @@ public: // 공개형
             return (rear - front + MAX) % MAX; // rear-front가 -가 나올 수도 있기 때문에 +MAX를 시켜주고, MAX로 나눔으로써 몇개가 존재하는지 반환
         }
     }
-    int Front_get() {
-        return front;
+    int Front_get() { // 프론트값 리턴 함수 선언
+        return front; // 프론트 값 리턴
     }
-    int Rear_get() {
-        return rear;
+    int Rear_get() { // 리어 값 리턴 함수 선언
+        return rear; // 리어 값 리턴
     }
 };
 
 void Pro_CirQue(CirQueue cirqueue) {
     cout << "\n========== [ 남은 큐의 상태 ] ==========" << endl; // 문자열 출력
     cout << "개수     : " << cirqueue.size() << endl; // 문자열 출력 및 개수 출력
-    cout << "최상단   : " << cirqueue.peek() << endl; // 문자열 출력 및 제일 앞의 요소 출력
+    cirqueue.peek(); // 문자열 출력 및 제일 앞의 요소 출력
     cout << "front    : " << cirqueue.Front_get() << endl; // 문자열 출력 및 front값 출력
     cout << "rear     : " << cirqueue.Rear_get() << endl; // 문자열 출력 및 rear값 출력
     cout << "[ 남은 요소 ]" << endl; // 문자열 출력
@@ -178,7 +182,7 @@ int main() {
             cirqueue.init(); // 큐를 초기화
         }
         else if (command == "최상단") { // 만약 command가 최상단일 경우
-            cout << "큐 제일 앞 요소: " << cirqueue.peek() << " 입니다." << endl;  // 큐의 제일 앞 요소를 출력
+            cirqueue.peek();  // 큐의 제일 앞 요소를 출력
         }
         else if (command == "개수") { // 만약 command가 개수일 경우
             cout << "큐의 요소 개수: " << cirqueue.size() << " 입니다." << endl; // 큐의 개수를 출력
