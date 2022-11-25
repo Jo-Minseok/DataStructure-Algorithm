@@ -10,9 +10,9 @@
 문제: 1. (8장 10번에서) 문제의 예와 같은 트리를 구성하고 이로부터 순회하는 함수들을 작성하고 출력하는 프로그램을 작성하시오.
 
 */
-#include <iostream>
-using namespace std;
-#define MAX 11
+#include <iostream> // 표준 입출력 헤더파일 인클루드
+using namespace std; // 이름 공간 표준 사용
+#define MAX 11 // 최대 원형큐의 사이즈를 11로 설정
 
 template <typename T>
 class CirQueue {
@@ -48,7 +48,7 @@ public: // 공개형
                 flag = 0; // flag를 0으로 설정하여 비었다고 설정
             }
             front = (front + 1) % MAX; // front를 다음 요소로 넘기고
-            return arr[front];
+            return arr[front]; // 반환
         }
     }
 
@@ -111,6 +111,11 @@ public: // public 접근 수정자로 외부에서 접근 가능하게 설정
 	int data; // int data로 한 노드의 실질적인 데이터를 포함하는 멤버 변수
 	BTnode* left; // 노드의 좌측 서브 트리를 가리키는 포인터 객체
 	BTnode* right; // 노드의 우측 서브 트리를 가리키는 포인터 객체
+    BTnode() { // 생성자
+        left = nullptr; // 왼쪽 대상을 null객체로 설정
+        right = nullptr; // 오른쪽 대상을 null객체로 설정
+        data = 0; // 데이터를 0으로 설정
+    }
 };
 
 class BTree { // 트리 클래스 정의
@@ -131,12 +136,10 @@ public: // public 접근 수정자로 외부에서 접근 가능하게 설정
         return root; // 루트를 리턴
     }
 
-    BTnode* create_tree(int data, BTnode* left, BTnode* right) { // 트리 생성 함수
-        BTnode* n = new BTnode(); // 포인터 노드 n 생성 및 동적으로 초기화
+    BTnode * create_tree(int data) { // 트리 생성 함수
+        BTnode* n = new BTnode();
         n->data = data; // 포인터 노드 n이 가리키는 data에 data 값을 대입
-        n->left = left; // 포인터 노드 n이 가리키는 left - 좌측 서브 트리를 가리키는 포인터 객체가 인자 left 객체를 가리키도록 대입
-        n->right = right; // // 포인터 노드 n이 가리키는 right - 우측 서브 트리를 가리키는 포인터 객체가 인자 right 객체를 가리키도록 대입
-        return n; // 포인터 노드 객체 n을 반환
+        return n;
     }
 
 	void preorder(BTnode * n) { // 전위 순회 방식(VLR)
@@ -180,23 +183,33 @@ public: // public 접근 수정자로 외부에서 접근 가능하게 설정
             }
         }
     }
+    
+    void connect(BTnode* parent, BTnode* leftChild, BTnode* rightChild) { // 연결 함수, 부모 노드, 왼쪽에 들어올 자식의 노드, 오른쪽에 들어올 자식의 노드를 입력 받음.
+        parent->right = rightChild; // 부모 노드의 오른쪽이 가르키는 값을 오른쪽 자식의 노드로 설정
+        parent->left = leftChild; // 부모 노드의 왼쪽이 가리키는 값을 왼쪽 자식의 노드로 설정 
+    }
 };
 
 int main() { // 메인 함수 선언
     BTree btree; // 트리 객체 생성 생성자를 통해서 init() 함수 호출 - root가 nullptr을 가리키게 하여 초기화
     BTnode* node[10]; // 포인터 노드 객체를 10개 생성 create_tree에서 포인터 노드를 반환하기 때문에, 포인터로 설정
-    node[0] = btree.create_tree(1, NULL, NULL); // 최하 자식 노드를 생성, 데이터 = 1, 좌측, 우측 자식이 없는 노드 생성
-    node[1] = btree.create_tree(3, NULL, NULL); // 최하 자식 노드를 생성, 데이터 = 3, 좌측, 우측 자식이 없는 노드 생성
-    node[2] = btree.create_tree(2, node[0], node[1]); // 데이터 = 2, 좌측 자식 node[0] 를 가지고, 우측 자식 node[1]을 가지는 노드 생성, 즉, node[0]과 node[1]의 부모 노드
-    node[3] = btree.create_tree(5, NULL, NULL); // 데이터 = 5, 좌측, 우측 자식이 없는 노드 생성
-    node[4] = btree.create_tree(4, node[2], node[3]); // 데이터 = 4, 좌측으로는 node[2](0,1의 부모 노드), 우측으로는 node[3]을 자식 노드로 가짐
+    btree.root = btree.create_tree(6); // 바이너리 트리의 루트의 데이터를 6으로 설정
+    node[0] = btree.create_tree(4); // 바이너리 트리의 루트의 데이터를 4로 설정
+    node[1] = btree.create_tree(9); // 바이너리 트리의 루트의 데이터를 9로 설정
+    node[2] = btree.create_tree(2); // 바이너리 트리의 루트의 데이터를 2로 설정
+    node[3] = btree.create_tree(5); // 바이너리 트리의 루트의 데이터를 5로 설정
+    node[4] = btree.create_tree(7); // 바이너리 트리의 루트의 데이터를 7로 설정
+    node[5] = btree.create_tree(10); // 바이너리 트리의 루트의 데이터를 10으로 설정
+    node[6] = btree.create_tree(1); // 바이너리 트리의 루트의 데이터를 1로 설정
+    node[7] = btree.create_tree(3); // 바이너리 트리의 루트의 데이터를 3로 설정
+    node[8] = btree.create_tree(8); // 바이너리 트리의 루트의 데이터를 8로 설정
+    node[9] = btree.create_tree(11); // 바이너리 트리의 루트의 데이터를 11로 설정
 
-    node[5] = btree.create_tree(8, NULL, NULL); // 최하 자식 노드를 생성, 데이터 = 8, 좌측, 우측 자식이 없는 노드 생성
-    node[6] = btree.create_tree(11, NULL, NULL); // 최하 자식 노드를 생성, 데이터 = 11, 좌측, 우측 자식이 없는 노드 생성
-    node[7] = btree.create_tree(10, node[5], node[6]); // 데이터 = 10, 좌측은 node[5], 우측은 npde[6] 자식을 가지는 노드를 생성
-    node[8] = btree.create_tree(7, NULL, NULL); // 데이터 = 7, 좌측, 우측 자식이 없는 노드 생성
-    node[9] = btree.create_tree(9, node[8], node[7]); // 데이터 = 9, 좌측은 node[8], 우측은 node[9] 자식을 가지는 노드를 생성
-    btree.root = btree.create_tree(6, node[4],node[9]); // 트리의 노드를 생성, 데이터는 6, 좌측 자식 노드는 node[4], 우측 자식 노드는 node[6] 을 대입 
+    btree.connect(btree.root, node[0], node[1]); // 루트의 왼쪽 자식, 오른쪽 자식을 각각 인자 노드에 연결함
+    btree.connect(node[0], node[2], node[3]); // 루트의 왼쪽 자식, 오른쪽 자식을 각각 인자 노드에 연결함
+    btree.connect(node[1], node[4], node[5]); // 루트의 왼쪽 자식, 오른쪽 자식을 각각 인자 노드에 연결함
+    btree.connect(node[2], node[6], node[7]); // 루트의 왼쪽 자식, 오른쪽 자식을 각각 인자 노드에 연결함
+    btree.connect(node[5], node[8], node[9]); // 루트의 왼쪽 자식, 오른쪽 자식을 각각 인자 노드에 연결함
 
     cout << "In-Order : "; // 문자열 출력
     btree.inorder(btree.root); // 중위 순회 함수에 트리의 루트를 대입
