@@ -12,7 +12,7 @@ void print_arr(int arr[], int size) { // 형식 인자는 배열, 배열의 크�
     cout << "\n"; // 줄 넘김
 }
 
-// 병합 함수
+// 병합 정렬 배열 비교 및 병합
 void Merge(int arr[], int start_index, int mid_index, int end_index) {
     int start_indexTmp, new_start_indexTmp, mid_indexTmp, end_indexTmp; // 시작 임시 인덱스, 새 배열 인덱스, 중간 임시 인덱스, 마지막 임시 인덱스 선언
 
@@ -52,7 +52,7 @@ void Merge(int arr[], int start_index, int mid_index, int end_index) {
     }
 }
 
-// 분할 및 정복(비교)
+// 병합 정렬 배열 분할
 void Merge_sort(int arr[], int start_index, int end_index) { // 인자값으로 배열, 시작 인덱스, 마지막 인덱스를 대입
     int mid_index; // 중간 인덱스 변수 선언
 
@@ -65,7 +65,7 @@ void Merge_sort(int arr[], int start_index, int end_index) { // 인자값으로 
         Merge_sort(arr, mid_index + 1, end_index); // 재귀 함수 호출로 값들을 대입, 우측 배열 생성
 
         // 합병
-        Merge(arr, start_index, mid_index, end_index); // 합병 함수 호출
+        Merge(arr, start_index, mid_index, end_index); // 병합 함수 호출
     }
 }
 
