@@ -86,7 +86,7 @@ public: // public 접근 지정자 그룹 생성
 		}
 	}
 
-	// 병합 정렬 연결리스트 병합
+	// 병합 정렬 연결리스트 비교 및 병합
 	Node* Merge(Node* left, Node* right) {
 
 		if (left == NULL) // 만약 왼쪽 리스트가 NULL이라면
