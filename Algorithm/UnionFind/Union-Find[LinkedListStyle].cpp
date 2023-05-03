@@ -86,6 +86,10 @@ int main() {
     while (link_count--) {
         cout << "확인할 노드 두 개를 입력하세요: ";
         cin >> link1 >> link2;
+        if (ziphap.Parentfind(link1) == nullptr || ziphap.Parentfind(link2) == nullptr) {
+            cout << "존재하지 않는 노드가 있습니다.\n";
+            continue;
+        }
         cout << link1 << "과 " << link2 << "는 ";
         if (ziphap.Parentfind(link1) == ziphap.Parentfind(link2)) {
             cout << "연결되어 있습니다.\n";
